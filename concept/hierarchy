@@ -1,38 +1,19 @@
-/temprature
-	/inside
-		/fire
-		/shamans
-	/outside
-
-+brightness
-	+inside
-		+fire
-	+outside
-		+gate
-/door ::open or not
-	/inside
-		/shamans
-	/outside
-		/gate
-
-/air ::no instant death on entering the shaman hut
-	/inside
-		/shamans
-
-/humidity ::important for spices
-	/inside
-		/shamans
-
-/infrared
-	/outside
-		/wall
-
+/inside
+	/fire
+		/temprature
+		/brightness
+	/shamans
+		/door		::occupied or not
+		/air		::breathable air, no instant death by spice
+		/humidity	::for the spices to grow
+		/temprature	::warm enough for healing spices
 /outside
-	/towers
-		/heartbeat
-		/eyesight
-
-/warthometer
-	/outside
-		/altar
-
+	/wall
+		/infrared
+		/towers
+			/heartbeat
+			/eyesight(actor)
+		/gate
+			/door
+	/altar
+		/gods wrathometer
