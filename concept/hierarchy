@@ -9,6 +9,7 @@
 		+fire
 	+outside
 		+gate
+		
 /door ::open or not
 	/inside
 		/shamans
