@@ -5,3 +5,21 @@
     "location":"",
     "msg" : ""
 }
+
+
+{
+    "Sensor": [
+      {
+        "Title": "FireLight",
+        "Type": "Brigthness",
+        "Location": "Inside/Fire",
+        "Message": "10cd"
+      },
+      {
+        "Title": "Shamanhumid",
+        "Type": "Humidity",
+        "Location": "Inside/Shaman",
+        "Message": "124g/m^3"
+      }
+    ]
+  }
