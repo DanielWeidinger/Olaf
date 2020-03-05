@@ -4,7 +4,7 @@
 		/brightness
 	/shamans
 		/door		::occupied or not
-		/air		::breathable air, no instant death by spice
+		/air		::breathable air, no instant death by spice 
 		/humidity	::for the spices to grow
 		/temprature	::warm enough for healing spices
 /outside
@@ -13,7 +13,7 @@
 		/towers
 			/heartbeat
 			/eyesight(actor)
-		/gate
-			/door
+        /gate
+            /door
 	/altar
 		/gods wrathometer
