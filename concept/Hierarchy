@@ -10,9 +10,10 @@
 /outside
 	/wall
 		/infrared
-			/movement
 		/towers
 			/heartbeat
 			/eyesight(actor)
+        /gate
+            /door
 	/altar
 		/gods wrathometer
