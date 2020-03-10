@@ -1,18 +1,20 @@
 {
-  "title": "",
-  "type": "",
-  "description": "?",
-  "location": "",
-  "msg": ""
+    "title": "",
+    "type": "",
+    "time": "",
+    "location":"",
+    "msg" : ""
 }
 
 
 {
-  "Sensor": [{
+"Sensor": [
+    {
       "Title": "FireLight",
       "Type": "Brigthness",
       "Location": "Inside/Fire",
-      "Message": "10cd"
+      "Message": "10cd",
+      "Time": "Now"
     },
     {
       "Title": "Shamanhumid",
