@@ -8,19 +8,19 @@
 
 
 {
-    "Sensor": [
-      {
-        "Title": "FireLight",
-        "Type": "Brigthness",
-        "Location": "Inside/Fire",
-        "Message": "10cd",
-        "Time": "Now"
-      },
-      {
-        "Title": "Shamanhumid",
-        "Type": "Humidity",
-        "Location": "Inside/Shaman",
-        "Message": "124g/m^3"
-      }
-    ]
-  }
+"Sensor": [
+    {
+      "Title": "FireLight",
+      "Type": "Brigthness",
+      "Location": "Inside/Fire",
+      "Message": "10cd",
+      "Time": "Now"
+    },
+    {
+      "Title": "Shamanhumid",
+      "Type": "Humidity",
+      "Location": "Inside/Shaman",
+      "Message": "124g/m^3"
+    }
+  ]
+}
