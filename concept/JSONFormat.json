@@ -21,6 +21,7 @@
       "Type": "Humidity",
       "Location": "Inside/Shaman",
       "Message": "124g/m^3"
+      "Time": "12:00"
     }
   ]
 }
