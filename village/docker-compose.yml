@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
     broker:
         image: eclipse-mosquitto
@@ -7,10 +7,12 @@ services:
             - "9001:9001"
     nodered:
         image: nodered/node-red-docker
-        volumes: 
+        volumes:
             - ../flows:/flows
         ports:
-            - "1880:1880" 
-        environment: 
+            - "1880:1880"
+        environment:
             - FLOWS=/flows/main_flow.json
-        
+    database:
+        image: mongo:latest
+        port: 8081:8081
