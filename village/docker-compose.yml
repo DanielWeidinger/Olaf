@@ -15,4 +15,5 @@ services:
             - FLOWS=/flows/main_flow.json
     database:
         image: mongo:latest
-        port: 8081:8081
+        ports: 
+            - "8081:8081"
