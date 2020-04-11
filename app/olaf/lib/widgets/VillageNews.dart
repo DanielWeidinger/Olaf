@@ -19,8 +19,32 @@ class _VillageNewsState extends State<VillageNews> {
       height: 330,
       child: ListView(
         reverse: true,
-        children: _state.getAllMessages.map((msg) => Text(msg.topic + ": " + msg.payload)).toList(),
+        children: _state.getAllMessages.map((msg) => MQTTMessageItem(msg.Json)).toList(),
       ),
     );
   }
 }
+
+
+class MQTTMessageItem extends StatefulWidget {
+  final Map<String, dynamic> json;
+
+  MQTTMessageItem(this.json);
+
+  @override
+  _MQTTMessageItemState createState() => _MQTTMessageItemState();
+}
+
+class _MQTTMessageItemState extends State<MQTTMessageItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Row(
+        children: <Widget>[
+          Text(widget.json["title"])
+        ],
+      ),
+    );
+  }
+}
+

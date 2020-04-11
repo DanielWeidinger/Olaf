@@ -30,25 +30,3 @@ class MQTTMessage{
 
   MQTTMessage(this.topic, this.payload);
 }
-
-class MQTTMessageItem extends StatefulWidget {
-  final Map<String, dynamic> json;
-
-  MQTTMessageItem(this.json);
-
-  @override
-  _MQTTMessageItemState createState() => _MQTTMessageItemState();
-}
-
-class _MQTTMessageItemState extends State<MQTTMessageItem> {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: <Widget>[
-          Text(widget.json["title"])
-        ],
-      ),
-    );
-  }
-}
