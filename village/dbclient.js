@@ -3,4 +3,10 @@ var client = mqtt.connect('mqtt://192.168.99.100:1883')
 
 client.on('connect', () => {
     console.log('connected')
+    client.subscribe('#', ()=>{})
+    
+})
+
+client.on('message', (topic, payload) => {
+    console.log(payload.toString())
 })
