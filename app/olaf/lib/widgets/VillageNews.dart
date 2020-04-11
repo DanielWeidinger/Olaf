@@ -19,7 +19,7 @@ class _VillageNewsState extends State<VillageNews> {
       height: 330,
       child: ListView(
         reverse: true,
-        children: _state.getAllMessages.map((msg) => MQTTMessageItem(msg.Json)).toList(),
+        children: _state.getAllMessages.map((msg) => MQTTMessageItem(msg)).toList(),
       ),
     );
   }
@@ -27,9 +27,9 @@ class _VillageNewsState extends State<VillageNews> {
 
 
 class MQTTMessageItem extends StatefulWidget {
-  final Map<String, dynamic> json;
+  final MQTTMessage msg;
 
-  MQTTMessageItem(this.json);
+  MQTTMessageItem(this.msg);
 
   @override
   _MQTTMessageItemState createState() => _MQTTMessageItemState();
@@ -39,12 +39,31 @@ class _MQTTMessageItemState extends State<MQTTMessageItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
+      color: _isAlert(widget.msg.topic) ? Colors.red : null,
+      child: Column(
         children: <Widget>[
-          Text(widget.json["title"])
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Topic: " + widget.msg.topic),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(widget.msg.Json["title"] + " : "),
+              Text(widget.msg.Json["msg"].toString())
+            ],
+          ),
+          Divider(),
+          Text(DateTime.fromMicrosecondsSinceEpoch(widget.msg.Json["time"]).toIso8601String())
         ],
       ),
     );
+  }
+
+  bool _isAlert(String topic){
+    return topic.contains("infrared") ||
+           topic.contains("eyesight") ||
+           topic.contains("heartbeat");
   }
 }
 

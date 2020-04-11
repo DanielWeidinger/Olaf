@@ -1,15 +1,14 @@
 {
-    "title": "",
-    "type": "",
-    "time": "",
-    "location":"",
-    "msg" : ""
+  "title": "",
+  "type": "",
+  "time": "",
+  "location": "",
+  "msg": ""
 }
 
 
 {
-"Sensor": [
-    {
+  "examples": [{
       "Title": "FireLight",
       "Type": "Brigthness",
       "Location": "Inside/Fire",
