@@ -7,7 +7,7 @@ services:
             - "1883:1883"
             - "9001:9001"
     nodered:
-        image: nodered/node-red-docker
+        build: ./node_red_image
         volumes:
             - ../flows:/flows
         ports:
@@ -16,5 +16,8 @@ services:
             - FLOWS=/flows/main_flow.json
     database:
         image: mongo:latest
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
         ports:
             - "8081:8081"
