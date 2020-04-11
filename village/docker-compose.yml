@@ -1,6 +1,7 @@
 version: "3"
 services:
     broker:
+        #not used anymore; just here for debugging
         image: eclipse-mosquitto
         ports:
             - "1883:1883"
@@ -15,4 +16,5 @@ services:
             - FLOWS=/flows/main_flow.json
     database:
         image: mongo:latest
-        port: 8081:8081
+        ports:
+            - "8081:8081"

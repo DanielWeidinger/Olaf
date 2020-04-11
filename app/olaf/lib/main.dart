@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:olaf/screens/HomePage.dart';
+import 'package:olaf/services/states/MQTTState.dart';
+import 'package:olaf/widgets/MQTTConnection.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +24,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: ChangeNotifierProvider<MQTTAppState>(
+        create: (_) => MQTTAppState(),
+        child: HomePage(),
+      ),
     );
   }
 }
