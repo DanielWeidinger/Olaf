@@ -2,6 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
+import 'package:olaf/services/MQTTManager.dart';
+import 'package:olaf/services/states/MQTTState.dart';
+import 'package:olaf/widgets/MQTTConnection.dart';
+import 'package:olaf/widgets/MQTTMessenger.dart';
+import 'package:olaf/widgets/VillageNews.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,110 +16,60 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
-  String broker           = '192.168.99.100';
-  int port                = 1883;
-  String username         = 'user';
-  String passwd           = 'passwd';
-  String clientIdentifier = 'VikingPhone';
-  mqtt.MqttClient client;
-  mqtt.MqttClientConnectionStatus connectionState;
-  StreamSubscription subscription;
-  String _val = "";
+  MQTTManager _manager;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Olaf - Dashboard"),
+        title: const Text('Olaf - Village Administration'),
+        backgroundColor: Colors.greenAccent,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(_val)
-          ],
+      drawer: Drawer(
+        child: Padding(
+          padding: EdgeInsets.only(top: 25),
+          child: MQTTConnection(_createManager),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _connect,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Column(
+                    children: <Widget>[
+                      Image.asset("assets/profile.jpg", scale: 10,),
+                      Text("name: Olaf Olafson"),
+                      Text("occupation: Professional Viking")
+                    ],
+              ),
+              VillageNews(_manager),
+              MQTTMessenger(_manager)
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  void _connect() async {
-    client = mqtt.MqttClient(broker, '');
-    client.port = port;
-    client.logging(on: true);
-    client.keepAlivePeriod = 30;
-    client.onDisconnected = _onDisconnected;
+  _createManager({host, topic, identifier}){
 
-    final mqtt.MqttConnectMessage connMess = mqtt.MqttConnectMessage()
-        .withClientIdentifier(clientIdentifier)
-        .startClean() // Non persistent session for testing
-        .keepAliveFor(30)
-        .withWillQos(mqtt.MqttQos.atMostOnce);
-    client.connectionMessage = connMess;
+    MQTTAppState _currentState = Provider.of<MQTTAppState>(context);
 
-    try {
-      await client.connect(username, passwd);
-    } catch (e) {
-      print(e);
-      _disconnect();
-    }
-
-    if (client.connectionState == mqtt.MqttConnectionState.connected) {
-      setState(() {
-        connectionState = client.connectionStatus;
-      });
-    } else {
-      _disconnect();
-    }
-
-    subscription = client.updates.listen(_onMessage);
-
-    _subscribeToTopic("temp");
+    _manager = MQTTManager(
+        host: host,
+        topic: topic,
+        identifier: identifier,
+        state: _currentState);
+    _manager.initializeMQTTClient();
+    _manager.connect();
   }
 
-  void _subscribeToTopic(String topic) {
-    if (connectionState == mqtt.MqttClientConnectionStatus) {
-      client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
-    }
-  }
+  /*
+   if (controller == _messageTextController &&
+        state == MQTTAppConnectionState.connected) {
+      shouldEnable = true;
+    } else
+  */
 
-  String _onMessage(List<mqtt.MqttReceivedMessage> event) {
-    final mqtt.MqttPublishMessage recMess =
-    event[0].payload as mqtt.MqttPublishMessage;
-    final String message =
-    mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
-    print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-        'payload is <-- ${message} -->');
-    print(client.connectionState);
-    print("[MQTT client] message with topic: ${event[0].topic}");
-    print("[MQTT client] message with message: ${message}");
-    setState(() {
-       _val = message;
-    });
-  }
-
-  void _disconnect() {
-    print('[MQTT client] _disconnect()');
-    client.disconnect();
-    _onDisconnected();
-  }
-
-  void _onDisconnected() {
-    print('[MQTT client] _onDisconnected');
-    setState(() {
-      //topics.clear();
-      if(client != null)
-      connectionState = client.connectionStatus;
-      client = null;
-      if(subscription != null)
-        subscription.cancel();
-      subscription = null;
-    });
-    print('[MQTT client] MQTT client disconnected');
-  }
 }
