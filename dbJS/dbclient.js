@@ -1,4 +1,3 @@
-console.log("da tanza is schlecht weil er ka location für nusskonsum hod")
 var mqtt = require('mqtt')
 var mongo = require('mongodb')
 var client = mqtt.connect('mqtt://192.168.99.100:1883')
