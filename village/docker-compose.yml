@@ -16,8 +16,18 @@ services:
             - FLOWS=/flows/main_flow.json
     database:
         image: mongo:latest
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=root
-            - MONGO_INITDB_ROOT_PASSWORD=root
         ports:
-            - "8081:8081"
+            - "27017:27017"
+    server:
+        build: ../dbjs
+        depends_on:
+            - "database"
+            - "broker"
+        command: >
+            /bin/sh -c "
+                sleep 10;
+                echo starting..
+                node ./httpClient/httpServer.js
+            "
+        ports:
+            - "9090:9090"
