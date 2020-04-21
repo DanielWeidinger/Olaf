@@ -17,10 +17,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   MQTTManager _manager;
+  MQTTMessenger _messenger;
 
   @override
   Widget build(BuildContext context) {
+
+    _messenger = MQTTMessenger();
+
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Olaf - Village Administration'),
         backgroundColor: Colors.greenAccent,
@@ -44,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                     ],
               ),
               VillageNews(_manager),
-              MQTTMessenger(_manager)
+              _messenger
             ],
           ),
         ),
@@ -63,6 +69,7 @@ class _HomePageState extends State<HomePage> {
         state: _currentState);
     _manager.initializeMQTTClient();
     _manager.connect();
+    _messenger.manager = _manager;
   }
 
   /*

@@ -10,7 +10,7 @@ class MQTTMessenger extends StatefulWidget {
 
   MQTTManager manager;
 
-  MQTTMessenger(MQTTManager manager);
+  MQTTMessenger();
 
   @override
   _MQTTMessengerState createState() => _MQTTMessengerState();
@@ -18,7 +18,7 @@ class MQTTMessenger extends StatefulWidget {
 
 class _MQTTMessengerState extends State<MQTTMessenger> {
 
-  TextEditingController _messageTextController;
+  TextEditingController _messageTextController = TextEditingController();
   MQTTAppState _currentAppState;
 
   @override
@@ -31,6 +31,12 @@ class _MQTTMessengerState extends State<MQTTMessenger> {
     );
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    _messageTextController.dispose();
+  }
 
   Widget _buildPublishMessageRow() {
     return Row(
